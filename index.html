@@ -14,8 +14,8 @@
         <h2>新規作成</h2>
         <div class="new-todo">
           <div>
-            <label for="new-todo">TODO名</label>
-            <input type="text" id="new-todo" placeholder="TODOを入力" />
+            <label for="new-todo-name">TODO名</label>
+            <input type="text" id="new-todo-name" placeholder="TODOを入力" />
           </div>
           <div>
             <label for="new-person">担当者</label>
@@ -25,8 +25,28 @@
             <label for="new-deadline">期限</label>
             <input type="date" id="new-deadline" />
           </div>
-          <div><button type="button">登録</button></div>
+          <div><button type="button" id="register">登録</button></div>
         </div>
+      </section>
+
+      <section>
+        <h2>TODO一覧</h2>
+        <table class="todo-list">
+          <thead>
+            <tr>
+              <th>TODO名</th>
+              <th>担当者</th>
+              <th>期限</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>aaa</td>
+              <td>bbb</td>
+              <td>ccc</td>
+            </tr>
+          </tbody>
+        </table>
       </section>
     </main>
   </body>
