@@ -1,0 +1,7 @@
+.new-todo {
+  display: flex;
+}
+
+.new-todo > div {
+  margin-left: 20px;
+}
