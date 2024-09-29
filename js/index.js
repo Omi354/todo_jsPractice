@@ -19,7 +19,7 @@ const removeTodoListElem = () => {
 };
 
 // todoList配列の中身をすべて表示
-const appendTodoListElem = () => {
+const appendTodoListElem = (todoList) => {
   todoList.forEach((todo) => {
     const todoNameTdElem = document.createElement("td");
     todoNameTdElem.textContent = todo.todoName;
@@ -42,11 +42,33 @@ const appendTodoListElem = () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   const registerBtnElem = document.getElementById("register");
+  const filterElem = document.getElementById("filter");
+
+  // 登録ボタンを押した際の動作
   registerBtnElem.addEventListener("click", () => {
     registerNewTodo();
 
     removeTodoListElem();
 
-    appendTodoListElem();
+    appendTodoListElem(todoList);
+  });
+
+  //絞り込みに入力した際の動作
+  filterElem.addEventListener("input", () => {
+    removeTodoListElem();
+
+    // filterへのインプットを取得
+    const filteringText = filterElem.value;
+
+    // 取得したインプットを元にフィルタリングし、新たな配列を生成
+    const filteredTodoList = todoList.filter((todo) => {
+      return (
+        todo.todoName.includes(filteringText) ||
+        todo.person.includes(filteringText)
+      );
+    });
+
+    // フィルタリングした配列の出力
+    appendTodoListElem(filteredTodoList);
   });
 });
