@@ -19,8 +19,10 @@ const removeTodoListElem = () => {
 };
 
 // todoList配列の中身をすべて表示
-const appendTodoListElem = (todoList) => {
-  todoList.forEach((todo) => {
+const appendTodoListElem = (_todoList) => {
+  removeTodoListElem();
+
+  _todoList.forEach((todo) => {
     const todoNameTdElem = document.createElement("td");
     todoNameTdElem.textContent = todo.todoName;
 
@@ -40,6 +42,20 @@ const appendTodoListElem = (todoList) => {
   });
 };
 
+// インプットタグの中身を削除
+const deleteInput = () => {
+  const newTodoName = document.getElementById("new-todo-name");
+  const newPerson = document.getElementById("new-person");
+  const newDeadline = document.getElementById("new-deadline");
+
+  newTodoName.value = "";
+  newPerson.value = "";
+  newDeadline.value = "";
+};
+
+// フィルタリングしたTodoListを生成
+const makeFilteredTodoList = () => {};
+
 document.addEventListener("DOMContentLoaded", () => {
   const registerBtnElem = document.getElementById("register");
   const filterElem = document.getElementById("filter");
@@ -48,15 +64,13 @@ document.addEventListener("DOMContentLoaded", () => {
   registerBtnElem.addEventListener("click", () => {
     registerNewTodo();
 
-    removeTodoListElem();
-
     appendTodoListElem(todoList);
+
+    deleteInput();
   });
 
   //絞り込みに入力した際の動作
   filterElem.addEventListener("input", () => {
-    removeTodoListElem();
-
     // filterへのインプットを取得
     const filteringText = filterElem.value;
 
@@ -68,7 +82,6 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     });
 
-    // フィルタリングした配列の出力
     appendTodoListElem(filteredTodoList);
   });
 });
