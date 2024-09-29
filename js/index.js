@@ -88,9 +88,22 @@ const deleteInput = () => {
   newDeadline.value = "";
 };
 
+// 並べ替えための関数
+const sortTodoList = (isAscending) => {
+  if (isAscending) {
+    todoList.sort((a, b) => new Date(a.deadline) - new Date(b.deadline)); // 期限が近いもの順に並べ替える
+  } else {
+    todoList.sort((a, b) => new Date(b.deadline) - new Date(a.deadline)); // 期限が遠いもの順に並べ替える
+  }
+
+  appendTodoListElem();
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   const registerBtnElem = document.getElementById("register");
   const filterElem = document.getElementById("filter");
+  const sortBtn = document.getElementById("sort");
+  let isAscending = true; // sortのための変数
 
   // 登録ボタンを押した際の動作
   registerBtnElem.addEventListener("click", () => {
@@ -101,8 +114,15 @@ document.addEventListener("DOMContentLoaded", () => {
     deleteInput();
   });
 
-  //絞り込みに入力した際の動作
+  // 絞り込みに入力した際の動作
   filterElem.addEventListener("input", () => {
     appendTodoListElem();
+  });
+
+  // 並べ替えのための動作
+
+  sortBtn.addEventListener("click", () => {
+    sortTodoList(isAscending);
+    isAscending = !isAscending;
   });
 });
