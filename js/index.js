@@ -7,12 +7,17 @@ const registerNewTodo = () => {
   const newPerson = document.getElementById("new-person");
   const newDeadline = document.getElementById("new-deadline");
   const newId = Date.now();
-  todoList.push({
-    todoName: newTodoName.value,
-    person: newPerson.value,
-    deadline: newDeadline.value,
-    id: newId,
-  });
+
+  if (newTodoName.value === "" || newPerson.value === "") {
+    window.alert("未入力の項目があります");
+  } else {
+    todoList.push({
+      todoName: newTodoName.value,
+      person: newPerson.value,
+      deadline: newDeadline.value,
+      id: newId,
+    });
+  }
 };
 
 // Todoリストの表示を一旦すべて消去
