@@ -15,10 +15,15 @@ const registerNewTodo = () => {
   });
 };
 
-// Todoリストの表示を一旦すべて削除
+// Todoリストの表示を一旦すべて消去
 const removeTodoListElem = () => {
   const tbodyElem = document.getElementById("todo-list");
   tbodyElem.replaceChildren();
+};
+
+// todoList配列から任意のTodoを削除
+const removeTodoById = (todoId) => {
+  todoList = todoList.filter((todo) => todo.id !== todoId);
 };
 
 // todoList配列の中身をすべて表示
@@ -49,11 +54,10 @@ const appendTodoListElem = () => {
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "削除";
     idTdElem.appendChild(deleteBtn);
+
     deleteBtn.addEventListener("click", () => {
       const todoId = todo.id;
-      todoList = todoList.filter((_todo) => {
-        return _todo.id !== todoId;
-      });
+      removeTodoById(todoId);
       appendTodoListElem();
     });
 
