@@ -55,22 +55,84 @@ const appendTodoListElem = () => {
     const deadlineTdElem = document.createElement("td");
     deadlineTdElem.textContent = todo.deadline;
 
-    const idTdElem = document.createElement("td");
+    const handlerTdElem = document.createElement("td");
+    const todoId = todo.id; // 削除と編集の対象を取得するためのid
+
+    // 削除機能の実装
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "削除";
-    idTdElem.appendChild(deleteBtn);
+    handlerTdElem.appendChild(deleteBtn); // 削除ボタンを操作カラムに追加
 
     deleteBtn.addEventListener("click", () => {
-      const todoId = todo.id;
       removeTodoById(todoId);
-      appendTodoListElem();
+      appendTodoListElem(); // 削除した配列todoListを再表示
+    });
+
+    // 編集機能の実装
+    const editBtn = document.createElement("button");
+    const updateBtn = document.createElement("button");
+    editBtn.textContent = "編集";
+    updateBtn.textContent = "更新";
+    updateBtn.style.display = "none";
+
+    handlerTdElem.appendChild(editBtn);
+    handlerTdElem.appendChild(updateBtn);
+
+    editBtn.addEventListener("click", () => {
+      // 各セルの情報を持ったインプットタグを生成
+      const todoNameInputElem = document.createElement("input");
+      todoNameInputElem.type = "text";
+      todoNameInputElem.value = todo.todoName;
+
+      const personInputElem = document.createElement("input");
+      personInputElem.type = "text";
+      personInputElem.value = todo.person;
+
+      const deadlineInputElem = document.createElement("input");
+      deadlineInputElem.type = "date";
+      deadlineInputElem.value = todo.deadline;
+
+      //tdのvalueを削除
+      todoNameTdElem.textContent = "";
+      personTdElem.textContent = "";
+      deadlineTdElem.textContent = "";
+
+      // インプットタグを各td内に配置
+      todoNameTdElem.appendChild(todoNameInputElem);
+      personTdElem.appendChild(personInputElem);
+      deadlineTdElem.appendChild(deadlineInputElem);
+
+      // 更新ボタンを表示し、編集ボタンを非表示にする
+      editBtn.style.display = "none";
+      updateBtn.style.display = "inline";
+
+      // 更新ボタンの動作を定義
+      updateBtn.addEventListener("click", () => {
+        // 編集後の値を取得
+        const updatedTodoName = todoNameInputElem.value;
+        const updatedPerson = personInputElem.value;
+        const updatedDeadline = deadlineInputElem.value;
+
+        // 編集したいインスタンスのidを取得
+        const updatedIndex = todoList.findIndex(
+          (_todo) => _todo.id === todo.id
+        );
+
+        // 配列の書き換えの処理
+        todoList[updatedIndex].todoName = updatedTodoName;
+        todoList[updatedIndex].person = updatedPerson;
+        todoList[updatedIndex].deadline = updatedDeadline;
+
+        // 再表示
+        appendTodoListElem();
+      });
     });
 
     const trElem = document.createElement("tr");
     trElem.appendChild(todoNameTdElem);
     trElem.appendChild(personTdElem);
     trElem.appendChild(deadlineTdElem);
-    trElem.appendChild(idTdElem);
+    trElem.appendChild(handlerTdElem);
 
     const tbodyElem = document.getElementById("todo-list");
     tbodyElem.appendChild(trElem);

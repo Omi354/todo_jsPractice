@@ -15,7 +15,8 @@
 }
 
 .todo-list > thead > tr > th,
-.todo-list > tbody > tr > td {
+.todo-list > tbody > tr > td,
+.todo-list > tbody > tr > input {
   width: 150px;
   border: 1px solid #ccc;
   padding: 10px;
