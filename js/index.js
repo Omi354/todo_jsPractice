@@ -102,8 +102,30 @@ const appendTodoListElem = () => {
       personTdElem.appendChild(personInputElem);
       deadlineTdElem.appendChild(deadlineInputElem);
 
+      // 更新ボタンを表示し、編集ボタンを非表示にする
       editBtn.style.display = "none";
       updateBtn.style.display = "inline";
+
+      // 更新ボタンの動作を定義
+      updateBtn.addEventListener("click", () => {
+        // 編集後の値を取得
+        const updatedTodoName = todoNameInputElem.value;
+        const updatedPerson = personInputElem.value;
+        const updatedDeadline = deadlineInputElem.value;
+
+        // 編集したいインスタンスのidを取得
+        const updatedIndex = todoList.findIndex(
+          (_todo) => _todo.id === todo.id
+        );
+
+        // 配列の書き換えの処理
+        todoList[updatedIndex].todoName = updatedTodoName;
+        todoList[updatedIndex].person = updatedPerson;
+        todoList[updatedIndex].deadline = updatedDeadline;
+
+        // 再表示
+        appendTodoListElem();
+      });
     });
 
     const trElem = document.createElement("tr");
