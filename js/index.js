@@ -115,7 +115,7 @@ const appendTodoListElem = () => {
 
         // 編集したいインスタンスのidを取得
         const updatedIndex = todoList.findIndex(
-          (_todo) => _todo.id === todo.id
+          (_todo) => _todo.id === todo.id,
         );
 
         // 配列の書き換えの処理
