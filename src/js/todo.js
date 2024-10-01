@@ -1,8 +1,10 @@
-let todoList = [];
-let filteringText = "";
+const data = {
+  todoList: [],
+  filteringText: "",
+};
 
 // 入力されたtodoの値を取得しオブジェクト化し配列に挿入
-const registerNewTodo = () => {
+export const registerNewTodo = () => {
   const newTodoName = document.getElementById("new-todo-name");
   const newPerson = document.getElementById("new-person");
   const newDeadline = document.getElementById("new-deadline");
@@ -11,7 +13,7 @@ const registerNewTodo = () => {
   if (newTodoName.value === "" || newPerson.value === "") {
     window.alert("未入力の項目があります");
   } else {
-    todoList.push({
+    data.todoList.push({
       todoName: newTodoName.value,
       person: newPerson.value,
       deadline: newDeadline.value,
@@ -28,20 +30,20 @@ const removeTodoListElem = () => {
 
 // todoList配列から任意のTodoを削除
 const removeTodoById = (todoId) => {
-  todoList = todoList.filter((todo) => todo.id !== todoId);
+  data.todoList = data.todoList.filter((todo) => todo.id !== todoId);
 };
 
 // todoList配列の中身をすべて表示
-const appendTodoListElem = () => {
+export const appendTodoListElem = () => {
   removeTodoListElem();
 
   const filterElem = document.getElementById("filter");
-  filteringText = filterElem.value;
+  data.filteringText = filterElem.value;
 
-  const filteredTodoList = todoList.filter((todo) => {
+  const filteredTodoList = data.todoList.filter((todo) => {
     return (
-      todo.todoName.includes(filteringText) ||
-      todo.person.includes(filteringText)
+      todo.todoName.includes(data.filteringText) ||
+      todo.person.includes(data.filteringText)
     );
   });
 
@@ -114,14 +116,14 @@ const appendTodoListElem = () => {
         const updatedDeadline = deadlineInputElem.value;
 
         // 編集したいインスタンスのidを取得
-        const updatedIndex = todoList.findIndex(
+        const updatedIndex = data.todoList.findIndex(
           (_todo) => _todo.id === todo.id,
         );
 
         // 配列の書き換えの処理
-        todoList[updatedIndex].todoName = updatedTodoName;
-        todoList[updatedIndex].person = updatedPerson;
-        todoList[updatedIndex].deadline = updatedDeadline;
+        data.todoList[updatedIndex].todoName = updatedTodoName;
+        data.todoList[updatedIndex].person = updatedPerson;
+        data.todoList[updatedIndex].deadline = updatedDeadline;
 
         // 再表示
         appendTodoListElem();
@@ -140,7 +142,7 @@ const appendTodoListElem = () => {
 };
 
 // インプットタグの中身を削除
-const deleteInput = () => {
+export const deleteInput = () => {
   const newTodoName = document.getElementById("new-todo-name");
   const newPerson = document.getElementById("new-person");
   const newDeadline = document.getElementById("new-deadline");
@@ -151,40 +153,12 @@ const deleteInput = () => {
 };
 
 // 並べ替えための関数
-const sortTodoList = (isAscending) => {
+export const sortTodoList = (isAscending) => {
   if (isAscending) {
-    todoList.sort((a, b) => new Date(a.deadline) - new Date(b.deadline)); // 期限が近いもの順に並べ替える
+    data.todoList.sort((a, b) => new Date(a.deadline) - new Date(b.deadline)); // 期限が近いもの順に並べ替える
   } else {
-    todoList.sort((a, b) => new Date(b.deadline) - new Date(a.deadline)); // 期限が遠いもの順に並べ替える
+    data.todoList.sort((a, b) => new Date(b.deadline) - new Date(a.deadline)); // 期限が遠いもの順に並べ替える
   }
 
   appendTodoListElem();
 };
-
-document.addEventListener("DOMContentLoaded", () => {
-  const registerBtnElem = document.getElementById("register");
-  const filterElem = document.getElementById("filter");
-  const sortBtn = document.getElementById("sort");
-  let isAscending = true; // sortのための変数
-
-  // 登録ボタンを押した際の動作
-  registerBtnElem.addEventListener("click", () => {
-    registerNewTodo();
-
-    appendTodoListElem();
-
-    deleteInput();
-  });
-
-  // 絞り込みに入力した際の動作
-  filterElem.addEventListener("input", () => {
-    appendTodoListElem();
-  });
-
-  // 並べ替えのための動作
-
-  sortBtn.addEventListener("click", () => {
-    sortTodoList(isAscending);
-    isAscending = !isAscending;
-  });
-});

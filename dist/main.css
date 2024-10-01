@@ -1,0 +1,33 @@
+/*!*********************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/css/style.css ***!
+  \*********************************************************************/
+.new-todo {
+  display: flex;
+}
+
+.new-todo > div {
+  margin-left: 20px;
+}
+
+.todo-list {
+  border-collapse: collapse;
+}
+
+.todo-list > thead {
+  background-color: #aaa;
+}
+
+.todo-list > thead > tr > th,
+.todo-list > tbody > tr > td,
+.todo-list > tbody > tr > input {
+  width: 150px;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.filter {
+  margin-bottom: 10px;
+}
+
+
+/*# sourceMappingURL=main.css.map*/
